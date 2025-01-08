@@ -5,8 +5,8 @@
   "main": "src/main.js",
   "scripts": {
     "dev": "ts-node -r tsconfig-paths/register ./src/main.ts --files",
-    "start": "node ./build/src/index.js",
-    "build": "rm -rf ./build && tsc && tsc-alias",
+    "start": "node ./build/src/main.js",
+    "build": "rimraf ./build && tsc && tsc-alias",
     "lint": "eslint .",
     "lint:clear": "rm -f .eslintcache",
     "lint:fix": "yarn run lint --fix",
@@ -16,7 +16,7 @@
     "test:coverage": "yarn run test --config jest.coverage.config.ts --coverage"
   },
   "keywords": [],
-  "author": "Eyder Rios",
+  "author": "Joao Luiz",
   "license": "MIT",
   "resolutions": {
     "glob": "^9",
@@ -44,6 +44,7 @@
     "jest-mock-extended": "^4",
     "lint-staged": "^15",
     "prettier": "^3",
+    "rimraf": "^6.0.1",
     "ts-jest": "^29",
     "ts-node": "^10",
     "ts-node-dev": "^2",
