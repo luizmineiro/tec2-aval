@@ -9,10 +9,7 @@
     "sourceMap": true,
     "strict": true,
     "esModuleInterop": true,
-    "types": [
-      "node",
-      "jest"
-    ],
+    "types": ["node", "jest"],
     "plugins": [
       {
         "transform": "typescript-transform-paths"
@@ -23,22 +20,10 @@
       }
     ],
     "paths": {
-      "@/*": [
-        "./src/*",
-        "./test/*"
-      ]
+      "@/*": ["src/*"],
+      "@test/*": ["test/*"]
     }
   },
-  "include": [
-    "./*.ts",
-    "./src/**/*.ts",
-    "./test/**/*.ts",
-    "./types/**/*.d.ts"
-  ],
-  "exclude": [
-    "build",
-    "dist",
-    "node_modules",
-    "tsconfig.json"
-  ]
+  "include": ["src/**/*", "test/**/*"],
+  "exclude": ["build", "dist", "node_modules", "tsconfig.json"]
 }

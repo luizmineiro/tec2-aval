@@ -25,6 +25,12 @@
   "dependencies": {
     "dotenv": "^16"
   },
+  "lint-staged": {
+    "*.ts": [
+      "eslint --fix",
+      "yarn test:staged"
+    ]
+  },
   "devDependencies": {
     "@types/jest": "^29",
     "@types/node": "^22",

@@ -6,6 +6,8 @@ const config: JestConfigWithTsJest = {
   preset: 'ts-jest',
   testEnvironment: 'node',
   verbose: true,
+  collectCoverage: true,
+  collectCoverageFrom: ['src/**/*.ts', '!src/main.ts'],
   extensionsToTreatAsEsm: ['.ts'],
   transform: {
     '^.+\\.ts$': 'ts-jest',

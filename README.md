@@ -1,256 +1,163 @@
-#### 1. Setup VSCode Extensions
 
+# Projeto Node.js com TypeScript, Jest e Clean Architecture
+
+Este projeto implementa um sistema de cadastro de usuários seguindo os princípios da Clean Architecture, utilizando TypeScript e Jest para testes.
+
+
+## Autor
+
+- [João Luiz Mineiro Alves](https://github.com/luizmineiro)
+
+
+## 🛠️ Tecnologias Utilizadas
+
+- Node.js
+- TypeScript
+- Jest (Testing Framework)
+- ESLint (Linting)
+- Prettier (Code Formatting)
+
+
+## 📁 Estrutura do Projeto
+
+```plaintext
+src/
+  ├── domain/
+  │   ├── entities/
+  │   │   ├── User.ts
+  │   │   └── Vehicle.ts
+  │   ├── repositories/
+  │   │   └── IUserRepository.ts
+  │   └── services/
+  │       └── IEmailValidator.ts
+  ├── application/
+  │   └── usecases/
+  │       └── signup/
+  │           ├── SignUpUseCase.ts
+  │           ├── SignUpDTO.ts
+  │           └── SignUpResponse.ts
+  └── infrastructure/
+      ├── repositories/
+      │   └── UserRepository.ts
+      └── services/
+          └── EmailValidator.ts
+test/
+  ├── domain/
+  │   ├── entities/
+  │   │   ├── User.spec.ts
+  │   │   └── Vehicle.spec.ts
+  │   └── mocks/
+  │       └── MockUser.ts
+  ├── application/
+  │   └── usecases/
+  │       └── signup/
+  │           ├── SignUpUseCase.spec.ts
+  │           └── mocks/
+  │               ├── MockUserRepository.ts
+  │               └── MockEmailValidator.ts
+  └── helpers/
+      └── TestFactory.ts
+```
+## 🚀 Como Executar
+
+### Pré-requisitos
+- Node.js (versão 14 ou superior)
+- Yarn (ou npm)
+###
+
+1. Clone o repositório:
 ```bash
-code --install-extension dracula-theme.theme-dracula
-code --install-extension oderwat.indent-rainbow
-code --install-extension ms-vscode.vscode-typescript-next
-code --install-extension yzhang.markdown-all-in-one
-code --install-extension natqe.reload
-code --install-extension vscode-icons-team.vscode-icons
-code --install-extension dbaeumer.vscode-eslint
+git clone https://github.com/luizmineiro/tec2-aval
+cd tec2-aval
 ```
 
-#### 2. Initial Setup
-
-**`package.json`**
-
-```json
-{
-  "name": "typescript",
-  "version": "1.0.0",
-  "description": "Node, Typescript, Jest, ESLint Template Project",
-  "main": "src/main.js",
-  "scripts": {
-    "dev": "nodemon -r tsconfig-paths/register --exec ts-node ./src/main.ts --files",
-    "start": "node ./build/src/index.js",
-    "build": "tsc && tsc-alias",
-    "lint": "eslint ./src/**/*.ts --fix",
-    "format": "prettier --write ./**/*.{ts,json}"
-  },
-  "keywords": [],
-  "author": "Eyder Rios",
-  "license": "MIT",
-  "resolutions": {
-    "glob": "^9",
-    "rimraf": "^4"
-  },
-  "dependencies": {
-    "dotenv": "^16"
-  },
-  "devDependencies": {
-    "@types/jest": "^29",
-    "@types/node": "^22",
-    "@typescript-eslint/eslint-plugin": "^8",
-    "@typescript-eslint/parser": "^8",
-    "eslint": "^9",
-    "eslint-config-love": "^113",
-    "eslint-config-prettier": "^9",
-    "eslint-plugin-import": "^2",
-    "eslint-plugin-jest": "^28",
-    "eslint-plugin-markdown": "^5",
-    "eslint-plugin-n": "^17",
-    "eslint-plugin-prettier": "^5",
-    "eslint-plugin-promise": "^7",
-    "jest": "^29",
-    "prettier": "^3",
-    "ts-jest": "^29",
-    "ts-node": "^10",
-    "ts-node-dev": "^2",
-    "tsconfig-paths": "^4",
-    "typescript": "^5",
-    "typescript-transform-paths": "^3"
-  }
-}
-```
-
+2. Instale as dependências:
 ```bash
-rm -rf node_modules yarn.lock
-yarn cache clean
 yarn install
 ```
+## 📝 Executando os Testes
 
-**`.env`**
+Testes Unitários
 
 ```bash
-NODE_ENV=dev
+# Executa todos os testes
+yarn test
 
-DB_SCHEMA=mies
-DB_NAME=mies
-DB_USER=mies
-DB_PASSWORD=mies
+# Executa testes com watch mode
+yarn test:watch
+
+# Executa testes com cobertura
+yarn test:coverage
+```
+### Verificando a Cobertura de Testes
+Após executar yarn test:coverage, abra o arquivo coverage/lcov-report/index.html no navegador para ver o relatório detalhado de cobertura.
+
+## 🏗️ Arquitetura
+
+### O projeto segue os princípios da Clean Architecture:
+
+1. Domain Layer:
+
+- Contém as regras de negócio
+- Entidades: User, Vehicle
+- Interfaces: IUserRepository, IEmailValidator
+
+2. Application Layer:
+
+- Casos de uso da aplicação
+- DTOs para entrada e saída de dados
+- Implementação das regras de negócio
+
+3. Infrastructure Layer:
+
+- Implementações concretas das interfaces
+- Adaptadores para serviços externos
+## 📊 Diagrama de Dependência
+
+![Diagrama de Dependência](docs/image/diagram-2025-01-09-173154.png)
+
+_Figura 1: Diagrama de dependência do projeto_
+
+O diagrama acima ilustra as relações entre as diferentes camadas e componentes do projeto, demonstrando o fluxo de dependências de acordo com os princípios da Clean Architecture.
+## 🧪 Padrões de Teste
+
+### Nomenclatura
+- Arquivos de teste: `*.spec.ts` ou `*.test.ts`
+- Descrições claras usando `describe` e `it`
+- Padrão: `should [expected behavior] when [condition]`
+
+### Exemplo
+
+```typescript
+describe('SignUpUseCase', () => {
+  it('should create user when valid data is provided', () => {
+    // ...
+  })
+})
 ```
 
-`env.d.ts`
 
-```ts
-declare global {
-  namespace NodeJS {
-    interface ProcessEnv {
-      NODE_ENV: "dev" | "test" | "prod";
+## 📚 Documentação Adicional
 
-      API_KEY: string;
 
-      DB_SCHEMA: string;
-      DB_NAME: string;
-      DB_USER: string;
-      DB_PASSWORD: string;
-    }
-  }
-}
+- [jestjs.io](https://jestjs.io/)
 
-export {};
-```
+- [www.typescriptlang.org](https://www.typescriptlang.org/)
 
-**`src/main.ts`**
+- [blog.cleancoder.com](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)
+## 🤝 Contribuindo
 
-```ts
-import dotenv from "dotenv";
+1. Faça o fork do projeto
+2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
+3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
+4. Push para a branch (`git push origin feature/AmazingFeature`)
+5. Abra um Pull Request
 
-const initApp = () => {
-  dotenv.config();
-};
 
-const main = () => {
-  initApp();
-};
-```
+## Licença
 
-#### 3. Setup Typescript
+Este projeto está sob a licença [MIT](https://choosealicense.com/licenses/mit/)
 
-`tsconfig.json`
 
-```json
-{
-  "compilerOptions": {
-    "target": "es2023",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
-    "resolveJsonModule": true,
-    "baseUrl": ".",
-    "outDir": "./build",
-    "sourceMap": true,
-    "strict": true,
-    "esModuleInterop": true,
-    "types": ["node", "jest"],
-    "plugins": [
-      {
-        "transform": "typescript-transform-paths"
-      },
-      {
-        "transform": "typescript-transform-paths",
-        "afterDeclarations": true
-      }
-    ],
-    "paths": {
-      "@/*": ["./src/*", "./test/*"]
-    }
-  },
-  "include": ["./src/**/*.ts", "./test/**/*.ts", "env.d.ts"],
-  "exclude": ["node_modules", "tsconfig.json"]
-}
-```
-
-#### 4. Setup ESLint and Prettier
-
-`eslint.config.js`
-
-```js
-module.exports = {
-  root: true,
-  env: {
-    browser: false,
-    es2023: true,
-    node: true,
-    jest: true,
-  },
-  parser: "@typescript-eslint/parser",
-  parserOptions: {
-    ecmaVersion: 2023,
-    sourceType: "module",
-    project: "./tsconfig.json",
-  },
-  extends: [
-    "eslint:recommended",
-    "plugin:@typescript-eslint/recommended",
-    "plugin:prettier/recommended",
-    "plugin:import/recommended",
-    "plugin:import/typescript",
-  ],
-  plugins: ["@typescript-eslint", "prettier", "markdown", "import"],
-  rules: {
-    // ESLint Rules
-    "no-unused-vars": "warn",
-    "no-console": "warn",
-    "no-debugger": "error",
-
-    // TypeScript Rules
-    "@typescript-eslint/no-unused-vars": ["error"],
-    "@typescript-eslint/explicit-module-boundary-types": "off",
-
-    // Prettier Rules
-    "prettier/prettier": [
-      "error",
-      {
-        semi: false,
-        singleQuote: true,
-        trailingComma: "es5",
-        printWidth: 120,
-        tabWidth: 2,
-      },
-    ],
-    "import/order": [
-      "error",
-      {
-        groups: ["builtin", "external", "internal"],
-        pathGroups: [
-          {
-            pattern: "@/**",
-            group: "internal",
-            position: "after",
-          },
-        ],
-        pathGroupsExcludedImportTypes: ["builtin"],
-        alphabetize: {
-          order: "asc",
-          caseInsensitive: true,
-        },
-        "newlines-between": "always",
-      },
-    ],
-  },
-  overrides: [
-    {
-      files: ["**/*.md"],
-      processor: "markdown/markdown",
-    },
-  ],
-  ignorePatterns: ["build", "coverage", "dist", "node_modules"],
-};
-```
-
-#### 5. Setup Jest
-
-`jest.config.js`
-
-```js
-import type { JestConfigWithTsJest } from 'ts-jest'
-
-const config: JestConfigWithTsJest = {
-  verbose: true,
-  transform: {
-    '^.+\\.ts?$': [
-      'ts-jest',
-      {
-        useESM: true
-      }
-    ]
-  },
-  extensionsToTreatAsEsm: ['.ts'],
-  moduleNameMapper: {
-    '^(\\.{1,2}/.*)\\.js$': '$1',
-    '@/(.*)': ['<rootDir>/src/$1']
-  }
-};
-
-export default config
-```
+## 🐛 Encontrou um bug?
+Por favor, abra uma issue descrevendo o problema encontrado e como reproduzi-lo.
