@@ -62,7 +62,7 @@ test/
 
 ### Pré-requisitos
 - Node.js (versão 14 ou superior)
-- Yarn (ou npm)
+- Yarn
 ###
 
 1. Clone o repositório:
